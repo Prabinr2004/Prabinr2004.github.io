@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Personal Portfolio Website </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/0850574f00.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="header">
+    <div class="container">
+        <nav>
+            <img src="logo.png" class="logo">
+            <ul id="sidemenu">
+                <li><a href='#header'>Home</a></li>
+                <li><a href='#about'>About</a></li>
+                <li><a href='#Services'>Services</a></li>
+                <!-- <li><a href='#portfolio'>Portfolio</a></li> -->
+                <li><a href='#contact'>Contact</a></li>
+                <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
+            </ul>
+            <i class="fa-solid fa-bars" onclick="openmenu()"></i>
+        </nav>
+        <div class="header-text">
+            <p>CS/Digital Marketing Student</p>
+            <h1>Hi, I'm <span class="name">Prabin</span><br> Roka From <span class="location">Nepal.</span> </h1> 
+        </div>
+    </div>
+</div>
+
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <img src ="pp.jpeg">
+            </div>
+            <div class="about-col-2">
+                <h1 class="sub-title">About Me</h1>
+                <p>Hello! I'm Prabin Roka, a dedicated student, learner, and explorer from Nepal—a country known for its breathtaking landscapes and rich cultural heritage.</p>
+
+                <br>
+                
+                <p>My academic journey led me to the College of Idaho, where I am majoring in Computer Science with a specialization in Digital Marketing, alongside a minor in Arts. My passion lies at the intersection of technology and language, and I am particularly interested in Machine Learning and Natural Language Processing.</p>
+                
+                <br>
+                
+                <p>One of my long-term aspirations is to contribute to linguistic diversity in AI. While most language models primarily cater to widely spoken languages like English, I aim to develop a language model for Nepali. By doing so, I hope to enhance the digital representation of the Nepali language and culture, making AI more inclusive and accessible for Nepali speakers worldwide.</p>
+                
+                <br>
+                
+                <p>With a strong foundation in programming, data analysis, and machine learning, I am eager to explore new challenges, collaborate on meaningful projects, and continue learning in this ever-evolving field.</p>
+                
+                <br>
+                
+                <p>Let’s connect and grow together!</p>
+                
+                    <div class="tab-titles">
+                      <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                      <p class="tab-links" onclick="opentab('experience')">Experience</p> 
+                      <p class="tab-links" onclick="opentab('education')">Education</p>                         
+                    </div>
+                    <div class="tab-contents active-tab" id="skills">
+                        <ul>
+                            <li><span>Programming Languages</span><br>Python (Proficient), R (Proficient), SQL (Intermediate), HTML (Intermediate), C+ (Basic)</li>
+                            <li><span>Data Analysis & Visualization</span><br> tidyverse (Proficient), tidymodels (Proficient), ggplot2 (Proficient) </li>
+                            <li><span>Statistical & Machine Learning Techniques</span><br>Linear Regression, Multiple Regression, K-Nearest Neighbors, Logistic Regression, Cross-Validation, Model Comparison</li>
+                            <li><span>Tools & Platforms</span><br>(Proficient), All Microsoft Applications (Proficient), Tableau (Basic), Toast, POS (Point of Sale) </li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span>August 2022 - September 2022</span>
+                                <br><br>
+                                Nepal Red Cross Society, Kathmandu — Data Entry Operator 
+                                <br><br>
+                                Managed and entered donor health data, ensuring accuracy and completeness for blood bank operations.
+                                <br><br>
+                                Contributed to a nationwide blood donation campaign, supporting life-saving efforts through meticulous data handling. </li>
+                            <!-- <li><span>MazeMaster Project (2021)</span><br>Built and programmed a robot in Python to navigate mazes and collect objects, earning positive feedback during the competition.</li>
+                            <li><span>Chopstick Project (2022)</span><br>Collaborated on a community initiative to improve education, healthcare, and inclusivity in rural areas, focusing on LGBTQ support. Worked with locals to identify needs and implement strategies for lasting impact.</li> -->
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="education">
+                        <ul>
+                            <li><span>2018 - 2020</span><br>RamShah MA VI, Anbukhaireni, Tanahun, Nepal —SEE(Secondary Education Examination)</li>
+                            <li><span>2020 - 2022</span><br>Nepal Police School, Kavre, Kathmandu Nepal — SLC(School Leaving Certificate)</li>
+                            <li><span>2023 - Present</span><br>The College of Idaho, Cleveland, Blvd, Caldwell— Computer Science and Digital Marketing(Undergraduate)</li>
+                        </ul>
+                    </div>   
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Services">
+    <div class="container">
+        <h1 class="sub-title">My Skills</h1>
+        <div class="services-list">
+            <div>
+                <i class="fa-solid fa-crop"></i>
+                <h2>CS/Digital Marketing</h2>
+                <p>Skilled in designing web and app interfaces with a focus on user experience. Proficient in Photoshop for creating visuals and marketing assets.</p>
+                <a href="#">Learn more</a>
+            </div>
+            <div>
+                <i class="fa-solid fa-globe"></i>
+                <h2>Web Development</h2>
+                <p>Expert in HTML, CSS, and JavaScript with hands-on experience in building dynamic websites. Proficient in React for frontend development and RESTful APIs for backend integration.</p>
+                <a href="#">Learn more</a>
+            </div>
+            <div>
+                <i class="fa-solid fa-code"></i>
+                <h2>Programming Languages</h2>
+                <p>Experienced in Python, Java, C++, and SQL for developing applications and managing databases.</p>
+                <a href="#">Learn more</a>
+            </div>
+            <div>
+                <i class="fa-brands fa-uikit"></i>
+                <h2>UI/UX Design</h2>
+                <p>I create user-centric designs with a focus on usability. Skilled in tools like Figma, Adobe XD, and Photoshop for designing seamless interfaces.</p>
+                <a href="#">Learn more</a>
+            </div>    
+        </div>
+    </div>
+</div>
+<!-- 
+<div id="portfolio">
+    <div class="container">
+        <h1 class="sub-title">My Work</h1>
+        <div class="work-list">
+            <div class="work">
+               <img src="work-1.png"> 
+               <div class="layer">
+                <h3>Social Media App</h3>
+                <p>App ko barema Sekdini halka</p>
+                <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
+               </div>
+            </div>
+            <div class="work">
+                <img src="work-2.png">
+                <div class="layer">
+                    <h3> App</h3>
+                    <p>App ko barema Sekdini halka</p>
+                    <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
+                   </div> 
+             </div>
+             <div class="work">
+                <img src="work-3.png">
+                <div class="layer">
+                    <h3>Online Shopping App</h3>
+                    <p>App ko barema Sekdini halka</p>
+                    <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
+                   </div> 
+             </div>
+        </div>
+        <a href="#" class="btn">See more</a>
+    </div>
+</div>
+ -->
+<div id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="sub-title">Contact Me</h1>
+                <p><i class="fa-solid fa-paper-plane"></i> prabincxettri@gmail.com</p>
+                <p><i class="fa-solid fa-square-phone"></i> 2086020627</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/prabin_r.cxettrii/"><i class="fa-brands fa-instagram"></i></a>
+                    <a href=""><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href=""><i class="fa-brands fa-square-github"></i></a>
+                    <a href=""><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+                <a href="CV HOLA.pdf" class="btn btn2">Download CV</a>
+                <a href="https://docs.google.com/document/d/1LqN8T2Wkawfz_b2vj0fZ_y6X-U7BIbCXi767hOcG3i0/edit?usp=sharing" class="btn btn2">Download Coverletter</a>
+                <a href="SampleAnalysis.html" class="btn btn2">View Sample Analysis</a>
+            </div>
+            <div class="contact-right">
+                <form name="submit-to-google-sheet">
+                    <input type="text" name="Name" placeholder="Your Name" required>
+                    <input type="email" name="Email" placeholder="Your Email" required>
+                    <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                    <button type="submit" class="btn btn2">Submit</button>
+            </form>
+            <span id="msg"></span>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>Copyright © 2024 Prabin Roka.<i class="fa-regular fa-star"></i> All Rights Reserved</p>
+    </div>
+</div>
+
+
+<script>
+
+    var tablinks = document.getElementsByClassName("tab-links");
+    var tabcontents = document.getElementsByClassName("tab-contents");
+    
+    function opentab(tabname){
+        for(tablink of tablinks){
+            tablink.classList.remove("active-link");
+        }
+        for(tabcontent of tabcontents){
+            tabcontent.classList.remove("active-tab");
+        }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab");
+    }
+</script>
+
+<script>
+
+    var sidemenu = document.getElementById("sidemenu");
+
+    function openmenu(){
+        sidemenu.style.right = "0";    
+    }
+    function closemenu(){
+        sidemenu.style.right = "-200px";
+    }    
+
+</script>
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxRN0jlDB3eIHOPuNEFjCn4Ay-tlCFYo_xGkNqCAokeyAqrmCfRYdUjOSsofWm04RWtzA/exec'
+    const form = document.forms['submit-to-google-sheet']
+    const msg = document.getElementById("msg")
+  
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {msg.innerHTML = "Message sent successfully"
+        setTimeout(function(){
+            msg.innerHTML = ""
+        },5000)
+        form.reset()
+    })
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
+
+</body> 
+</html>
