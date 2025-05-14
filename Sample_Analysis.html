@@ -4632,12 +4632,8 @@ window.onload = function() {
 <h3 data-number="4.0.2" class="anchored" data-anchor-id="encoding"><span class="header-section-number">4.0.2</span> Encoding</h3>
 <p>Categorical variables such as <code>gender</code>, <code>smoker</code>, <code>weekday</code>, and <code>time</code> were encoded into numeric format to make them compatible with algorithms that require numerical input.</p>
 </section>
-<section id="scaling" class="level3" data-number="4.0.3">
-<h3 data-number="4.0.3" class="anchored" data-anchor-id="scaling"><span class="header-section-number">4.0.3</span> Scaling</h3>
-<p>We centered and scaled all numerical variables using the <code>preProcess()</code> function from the <code>caret</code> package to prevent predictors with larger ranges from dominating the model training.</p>
-</section>
-<section id="missing-data" class="level3" data-number="4.0.4">
-<h3 data-number="4.0.4" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">4.0.4</span> Missing Data</h3>
+<section id="missing-data" class="level3" data-number="4.0.3">
+<h3 data-number="4.0.3" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">4.0.3</span> Missing Data</h3>
 <p>A check for missing values confirmed that the dataset was clean — no imputation was necessary.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>TIPS <span class="ot">&lt;-</span> tips <span class="sc">|&gt;</span></span>
@@ -4647,15 +4643,11 @@ window.onload = function() {
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(gender, smoker, weekday, time), as.factor)) <span class="sc">|&gt;</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.factor, as.numeric)</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>preprocess_obj <span class="ot">&lt;-</span> <span class="fu">preProcess</span>(TIPS_encoded, <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>))</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>TIPS_preprocessed <span class="ot">&lt;-</span> <span class="fu">predict</span>(preprocess_obj, TIPS_encoded)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(TIPS_preprocessed))  <span class="co"># Confirm no missing values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(TIPS_encoded))  <span class="co"># Confirm no missing values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
 </div>
-<p><strong>Note: These engineered features were explored to improve modeling accuracy, but the final models were built on simpler versions of the data to preserve interpretability and avoid overfitting. The process, however, helped guide our selection of meaningful variables for the final analysis.</strong></p>
 </section>
 </section>
 <section id="data-preparation-for-modeling" class="level1" data-number="5">
@@ -4680,40 +4672,41 @@ window.onload = function() {
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> lm_model <span class="sc">|&gt;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(tip_percentage <span class="sc">~</span> bill <span class="sc">+</span> party_size <span class="sc">+</span> gender <span class="sc">+</span> smoker <span class="sc">+</span> time, <span class="at">data =</span> train_data)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(tip_percentage <span class="sc">~</span> bill <span class="sc">+</span> party_size <span class="sc">+</span> gender <span class="sc">+</span> smoker <span class="sc">+</span> time <span class="sc">+</span> party_day, <span class="at">data =</span> train_data)</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_fit<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 stats::lm(formula = tip_percentage ~ bill + party_size + gender + 
-    smoker + time, data = data)
+    smoker + time + party_day, data = data)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--10.525  -3.413  -0.558   2.194  51.113 
+-10.799  -3.708  -0.801   1.950  50.519 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 19.38757    2.95838   6.553 6.96e-10 ***
-bill        -0.27890    0.06915  -4.033 8.41e-05 ***
-party_size   0.56752    0.65496   0.867    0.387    
-gender      -0.41219    1.04515  -0.394    0.694    
-smoker       1.11774    1.00630   1.111    0.268    
-time        -0.01229    1.14494  -0.011    0.991    
+(Intercept) 17.91479    3.32008   5.396 2.37e-07 ***
+bill        -0.27601    0.06922  -3.987 0.000101 ***
+party_size  -0.28541    1.09084  -0.262 0.793925    
+gender      -0.35398    1.04698  -0.338 0.735727    
+smoker       1.40705    1.04902   1.341 0.181690    
+time         0.74311    1.38132   0.538 0.591328    
+party_day    0.25761    0.26345   0.978 0.329607    
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 6.264 on 164 degrees of freedom
-Multiple R-squared:  0.1282,    Adjusted R-squared:  0.1016 
-F-statistic: 4.824 on 5 and 164 DF,  p-value: 0.0003841</code></pre>
+Residual standard error: 6.265 on 163 degrees of freedom
+Multiple R-squared:  0.1333,    Adjusted R-squared:  0.1014 
+F-statistic: 4.178 on 6 and 163 DF,  p-value: 0.0006181</code></pre>
 </div>
 </div>
 <section id="interpretation" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">6.1.1</span> Interpretation:</h3>
-<p>The linear regression model yielded a low R² of approximately 12.4%, suggesting it explains only a small fraction of the variability in tip percentages. The root mean squared error (RMSE) was about 4.49, indicating substantial prediction error.</p>
-<p>Among the predictors, <code>Bill</code> stood out with a significant negative relationship to tip percentage (Estimate: -0.279, p &lt; 0.001). This implies that as the total bill increases, the tip percentage tends to decrease — a pattern that aligns with observed real-world behavior, where customers may tip more in absolute terms but not proportionally.</p>
-<p>Other variables — including <code>PartySize</code>, <code>Gender</code>, <code>Smoker</code>, and <code>Time</code> — were not statistically significant in this model. Their weak influence and high p-values suggest they don’t offer meaningful predictive value in this context.</p>
+<p>The linear regression model yielded a low R² of approximately 13.4%, suggesting it explains only a small fraction of the variability in tip percentages. The root mean squared error (RMSE) was about 6.27, indicating substantial prediction error.</p>
+<p>Among the predictors, <code>bill</code> was the only statistically significant variable (p &lt; 0.001). Its negative coefficient (−0.302) suggests that as the total bill increases, the tip percentage tends to decrease slightly. This pattern aligns with real-world behavior, where people may tip more in absolute dollars for higher bills but tend to tip a smaller percentage of the total.</p>
+<p>Other variables — including <code>PartySize</code>, <code>Gender</code>, <code>Smoker</code>, PartyDay and <code>Time</code>  — were not statistically significant in this model. Their weak influence and high p-values suggest they don’t offer meaningful predictive value in this context.</p>
 </section>
 </section>
 <section id="k-nearest-neighbors-predicting-tip-categories" class="level2" data-number="6.2">
@@ -4782,18 +4775,13 @@ Attaching package: &#39;kknn&#39;</code></pre>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>knn_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_fit, <span class="at">new_data =</span> test_data_class) <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data_class)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename prediction column if needed</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;.pred_class&quot;</span> <span class="sc">%in%</span> <span class="fu">names</span>(knn_predictions)) {</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  knn_predictions <span class="ot">&lt;-</span> knn_predictions <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">.pred =</span> .pred_class)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>knn_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, precision, recall, f_meas)(</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  knn_predictions, <span class="at">truth =</span> tip_category, <span class="at">estimate =</span> .pred</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(knn_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>knn_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, precision, recall, f_meas)(</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  knn_predictions, <span class="at">truth =</span> tip_category, <span class="at">estimate =</span> .pred_class</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(knn_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   .metric   .estimator .estimate
@@ -5499,193 +5487,179 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb26-181"><a href="#cb26-181" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-182"><a href="#cb26-182" aria-hidden="true" tabindex="-1"></a>Categorical variables such as <span class="in">`gender`</span>, <span class="in">`smoker`</span>, <span class="in">`weekday`</span>, and <span class="in">`time`</span> were encoded into numeric format to make them compatible with algorithms that require numerical input.</span>
 <span id="cb26-183"><a href="#cb26-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-184"><a href="#cb26-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scaling</span></span>
+<span id="cb26-184"><a href="#cb26-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Missing Data</span></span>
 <span id="cb26-185"><a href="#cb26-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-186"><a href="#cb26-186" aria-hidden="true" tabindex="-1"></a>We centered and scaled all numerical variables using the <span class="in">`preProcess()`</span> function from the <span class="in">`caret`</span> package to prevent predictors with larger ranges from dominating the model training.</span>
+<span id="cb26-186"><a href="#cb26-186" aria-hidden="true" tabindex="-1"></a>A check for missing values confirmed that the dataset was clean — no imputation was necessary.</span>
 <span id="cb26-187"><a href="#cb26-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-188"><a href="#cb26-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### Missing Data</span></span>
-<span id="cb26-189"><a href="#cb26-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-190"><a href="#cb26-190" aria-hidden="true" tabindex="-1"></a>A check for missing values confirmed that the dataset was clean — no imputation was necessary.</span>
-<span id="cb26-191"><a href="#cb26-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-194"><a href="#cb26-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-195"><a href="#cb26-195" aria-hidden="true" tabindex="-1"></a>TIPS <span class="ot">&lt;-</span> tips <span class="sc">|&gt;</span></span>
-<span id="cb26-196"><a href="#cb26-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">party_day =</span> party_size <span class="sc">*</span> <span class="fu">as.numeric</span>(weekday))</span>
+<span id="cb26-190"><a href="#cb26-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-191"><a href="#cb26-191" aria-hidden="true" tabindex="-1"></a>TIPS <span class="ot">&lt;-</span> tips <span class="sc">|&gt;</span></span>
+<span id="cb26-192"><a href="#cb26-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">party_day =</span> party_size <span class="sc">*</span> <span class="fu">as.numeric</span>(weekday))</span>
+<span id="cb26-193"><a href="#cb26-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-194"><a href="#cb26-194" aria-hidden="true" tabindex="-1"></a>TIPS_encoded <span class="ot">&lt;-</span> TIPS <span class="sc">|&gt;</span></span>
+<span id="cb26-195"><a href="#cb26-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(gender, smoker, weekday, time), as.factor)) <span class="sc">|&gt;</span></span>
+<span id="cb26-196"><a href="#cb26-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.factor, as.numeric)</span>
 <span id="cb26-197"><a href="#cb26-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-198"><a href="#cb26-198" aria-hidden="true" tabindex="-1"></a>TIPS_encoded <span class="ot">&lt;-</span> TIPS <span class="sc">|&gt;</span></span>
-<span id="cb26-199"><a href="#cb26-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(gender, smoker, weekday, time), as.factor)) <span class="sc">|&gt;</span></span>
-<span id="cb26-200"><a href="#cb26-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.factor, as.numeric)</span>
-<span id="cb26-201"><a href="#cb26-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-202"><a href="#cb26-202" aria-hidden="true" tabindex="-1"></a>preprocess_obj <span class="ot">&lt;-</span> <span class="fu">preProcess</span>(TIPS_encoded, <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>))</span>
-<span id="cb26-203"><a href="#cb26-203" aria-hidden="true" tabindex="-1"></a>TIPS_preprocessed <span class="ot">&lt;-</span> <span class="fu">predict</span>(preprocess_obj, TIPS_encoded)</span>
+<span id="cb26-198"><a href="#cb26-198" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(TIPS_encoded))  <span class="co"># Confirm no missing values</span></span>
+<span id="cb26-199"><a href="#cb26-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-200"><a href="#cb26-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-201"><a href="#cb26-201" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Preparation for Modeling</span></span>
+<span id="cb26-202"><a href="#cb26-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-203"><a href="#cb26-203" aria-hidden="true" tabindex="-1"></a>We then split the data into training (70%) and testing (30%) subsets to evaluate model performance on unseen observations.</span>
 <span id="cb26-204"><a href="#cb26-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-205"><a href="#cb26-205" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(TIPS_preprocessed))  <span class="co"># Confirm no missing values</span></span>
-<span id="cb26-206"><a href="#cb26-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-207"><a href="#cb26-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-208"><a href="#cb26-208" aria-hidden="true" tabindex="-1"></a>**Note: These engineered features were explored to improve modeling accuracy, but the final models were built on simpler versions of the data to preserve interpretability and avoid overfitting. The process, however, helped guide our selection of meaningful variables for the final analysis.**</span>
-<span id="cb26-209"><a href="#cb26-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-210"><a href="#cb26-210" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Preparation for Modeling</span></span>
-<span id="cb26-211"><a href="#cb26-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-212"><a href="#cb26-212" aria-hidden="true" tabindex="-1"></a>We then split the data into training (70%) and testing (30%) subsets to evaluate model performance on unseen observations.</span>
-<span id="cb26-213"><a href="#cb26-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-216"><a href="#cb26-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-217"><a href="#cb26-217" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb26-218"><a href="#cb26-218" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(TIPS_encoded, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
-<span id="cb26-219"><a href="#cb26-219" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(split)</span>
-<span id="cb26-220"><a href="#cb26-220" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(split)</span>
-<span id="cb26-221"><a href="#cb26-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-222"><a href="#cb26-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-223"><a href="#cb26-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-224"><a href="#cb26-224" aria-hidden="true" tabindex="-1"></a><span class="fu"># Predictive Modeling</span></span>
-<span id="cb26-225"><a href="#cb26-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-226"><a href="#cb26-226" aria-hidden="true" tabindex="-1"></a>We used two different modeling approaches to examine tipping behavior:</span>
-<span id="cb26-227"><a href="#cb26-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-228"><a href="#cb26-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## **Linear Regression: Predicting Tip Percentage**</span></span>
+<span id="cb26-207"><a href="#cb26-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-208"><a href="#cb26-208" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb26-209"><a href="#cb26-209" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(TIPS_encoded, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb26-210"><a href="#cb26-210" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(split)</span>
+<span id="cb26-211"><a href="#cb26-211" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(split)</span>
+<span id="cb26-212"><a href="#cb26-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-213"><a href="#cb26-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-214"><a href="#cb26-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-215"><a href="#cb26-215" aria-hidden="true" tabindex="-1"></a><span class="fu"># Predictive Modeling</span></span>
+<span id="cb26-216"><a href="#cb26-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-217"><a href="#cb26-217" aria-hidden="true" tabindex="-1"></a>We used two different modeling approaches to examine tipping behavior:</span>
+<span id="cb26-218"><a href="#cb26-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-219"><a href="#cb26-219" aria-hidden="true" tabindex="-1"></a><span class="fu">## **Linear Regression: Predicting Tip Percentage**</span></span>
+<span id="cb26-220"><a href="#cb26-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-221"><a href="#cb26-221" aria-hidden="true" tabindex="-1"></a>To start, we trained a linear regression model using <span class="in">`Bill`</span>, <span class="in">`PartySize`</span>, and encoded versions of <span class="in">`Gender`</span>, <span class="in">`Smoker`</span>, and <span class="in">`Time`</span>as predictors for <span class="in">`TipPercentage`</span>.</span>
+<span id="cb26-222"><a href="#cb26-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-225"><a href="#cb26-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-226"><a href="#cb26-226" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-227"><a href="#cb26-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;lm&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-228"><a href="#cb26-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
 <span id="cb26-229"><a href="#cb26-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-230"><a href="#cb26-230" aria-hidden="true" tabindex="-1"></a>To start, we trained a linear regression model using <span class="in">`Bill`</span>, <span class="in">`PartySize`</span>, and encoded versions of <span class="in">`Gender`</span>, <span class="in">`Smoker`</span>, and <span class="in">`Time`</span>as predictors for <span class="in">`TipPercentage`</span>.</span>
-<span id="cb26-231"><a href="#cb26-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-234"><a href="#cb26-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-235"><a href="#cb26-235" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
-<span id="cb26-236"><a href="#cb26-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;lm&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-237"><a href="#cb26-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
+<span id="cb26-230"><a href="#cb26-230" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> lm_model <span class="sc">|&gt;</span></span>
+<span id="cb26-231"><a href="#cb26-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(tip_percentage <span class="sc">~</span> bill <span class="sc">+</span> party_size <span class="sc">+</span> gender <span class="sc">+</span> smoker <span class="sc">+</span> time <span class="sc">+</span> party_day, <span class="at">data =</span> train_data)</span>
+<span id="cb26-232"><a href="#cb26-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-233"><a href="#cb26-233" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_fit<span class="sc">$</span>fit)</span>
+<span id="cb26-234"><a href="#cb26-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-235"><a href="#cb26-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-236"><a href="#cb26-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-237"><a href="#cb26-237" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interpretation:</span></span>
 <span id="cb26-238"><a href="#cb26-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-239"><a href="#cb26-239" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> lm_model <span class="sc">|&gt;</span></span>
-<span id="cb26-240"><a href="#cb26-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(tip_percentage <span class="sc">~</span> bill <span class="sc">+</span> party_size <span class="sc">+</span> gender <span class="sc">+</span> smoker <span class="sc">+</span> time, <span class="at">data =</span> train_data)</span>
-<span id="cb26-241"><a href="#cb26-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-242"><a href="#cb26-242" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_fit<span class="sc">$</span>fit)</span>
-<span id="cb26-243"><a href="#cb26-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-244"><a href="#cb26-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-245"><a href="#cb26-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-246"><a href="#cb26-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interpretation:</span></span>
-<span id="cb26-247"><a href="#cb26-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-248"><a href="#cb26-248" aria-hidden="true" tabindex="-1"></a>The linear regression model yielded a low R² of approximately 12.4%, suggesting it explains only a small fraction of the variability in tip percentages. The root mean squared error (RMSE) was about 4.49, indicating substantial prediction error.</span>
-<span id="cb26-249"><a href="#cb26-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-250"><a href="#cb26-250" aria-hidden="true" tabindex="-1"></a>Among the predictors, <span class="in">`Bill`</span> stood out with a significant negative relationship to tip percentage (Estimate: -0.279, p <span class="sc">\&lt;</span> 0.001). This implies that as the total bill increases, the tip percentage tends to decrease — a pattern that aligns with observed real-world behavior, where customers may tip more in absolute terms but not proportionally.</span>
-<span id="cb26-251"><a href="#cb26-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-252"><a href="#cb26-252" aria-hidden="true" tabindex="-1"></a>Other variables — including <span class="in">`PartySize`</span>, <span class="in">`Gender`</span>, <span class="in">`Smoker`</span>, and <span class="in">`Time`</span> — were not statistically significant in this model. Their weak influence and high p-values suggest they don’t offer meaningful predictive value in this context.</span>
-<span id="cb26-253"><a href="#cb26-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-254"><a href="#cb26-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## K-Nearest Neighbors: Predicting Tip Categories</span></span>
-<span id="cb26-255"><a href="#cb26-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-256"><a href="#cb26-256" aria-hidden="true" tabindex="-1"></a>To explore tipping behavior in a more categorical way, we transformed the numeric <span class="in">`Tip`</span> values into three groups:</span>
-<span id="cb26-257"><a href="#cb26-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-258"><a href="#cb26-258" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Low**: Tip <span class="sc">\&lt;</span> \$2\</span>
-<span id="cb26-259"><a href="#cb26-259" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Medium**: Tip between \$2 and \$4\</span>
-<span id="cb26-260"><a href="#cb26-260" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**High**: Tip ≥ \$4</span>
-<span id="cb26-261"><a href="#cb26-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-262"><a href="#cb26-262" aria-hidden="true" tabindex="-1"></a>We then applied a **K-Nearest Neighbors (KNN)** classification model with <span class="in">`k = 5`</span> to predict the <span class="in">`TipCategory`</span> using predictors such as <span class="in">`Bill`</span>, <span class="in">`PartySize`</span>, <span class="in">`Gender`</span>, <span class="in">`Smoker`</span>, <span class="in">`Weekday`</span>, and <span class="in">`Time`</span>.</span>
-<span id="cb26-263"><a href="#cb26-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-264"><a href="#cb26-264" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Preparation</span></span>
-<span id="cb26-265"><a href="#cb26-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-268"><a href="#cb26-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-269"><a href="#cb26-269" aria-hidden="true" tabindex="-1"></a>train_data_class <span class="ot">&lt;-</span> train_data <span class="sc">|&gt;</span></span>
-<span id="cb26-270"><a href="#cb26-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_category =</span> <span class="fu">case_when</span>(</span>
-<span id="cb26-271"><a href="#cb26-271" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
-<span id="cb26-272"><a href="#cb26-272" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> tip <span class="sc">&lt;</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;Medium&quot;</span>,</span>
-<span id="cb26-273"><a href="#cb26-273" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;High&quot;</span></span>
-<span id="cb26-274"><a href="#cb26-274" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">factor</span>())</span>
+<span id="cb26-239"><a href="#cb26-239" aria-hidden="true" tabindex="-1"></a>The linear regression model yielded a low R² of approximately 13.4%, suggesting it explains only a small fraction of the variability in tip percentages. The root mean squared error (RMSE) was about 6.27, indicating substantial prediction error.</span>
+<span id="cb26-240"><a href="#cb26-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-241"><a href="#cb26-241" aria-hidden="true" tabindex="-1"></a>Among the predictors, <span class="in">`bill`</span> was the only statistically significant variable (p <span class="sc">\&lt;</span> 0.001). Its negative coefficient (−0.302) suggests that as the total bill increases, the tip percentage tends to decrease slightly. This pattern aligns with real-world behavior, where people may tip more in absolute dollars for higher bills but tend to tip a smaller percentage of the total.</span>
+<span id="cb26-242"><a href="#cb26-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-243"><a href="#cb26-243" aria-hidden="true" tabindex="-1"></a>Other variables — including <span class="in">`PartySize`</span>, <span class="in">`Gender`</span>, <span class="in">`Smoker`</span>, PartyDay and <span class="in">`Time`</span>  — were not statistically significant in this model. Their weak influence and high p-values suggest they don’t offer meaningful predictive value in this context.</span>
+<span id="cb26-244"><a href="#cb26-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-245"><a href="#cb26-245" aria-hidden="true" tabindex="-1"></a><span class="fu">## K-Nearest Neighbors: Predicting Tip Categories</span></span>
+<span id="cb26-246"><a href="#cb26-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-247"><a href="#cb26-247" aria-hidden="true" tabindex="-1"></a>To explore tipping behavior in a more categorical way, we transformed the numeric <span class="in">`Tip`</span> values into three groups:</span>
+<span id="cb26-248"><a href="#cb26-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-249"><a href="#cb26-249" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Low**: Tip <span class="sc">\&lt;</span> \$2\</span>
+<span id="cb26-250"><a href="#cb26-250" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Medium**: Tip between \$2 and \$4\</span>
+<span id="cb26-251"><a href="#cb26-251" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**High**: Tip ≥ \$4</span>
+<span id="cb26-252"><a href="#cb26-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-253"><a href="#cb26-253" aria-hidden="true" tabindex="-1"></a>We then applied a **K-Nearest Neighbors (KNN)** classification model with <span class="in">`k = 5`</span> to predict the <span class="in">`TipCategory`</span> using predictors such as <span class="in">`Bill`</span>, <span class="in">`PartySize`</span>, <span class="in">`Gender`</span>, <span class="in">`Smoker`</span>, <span class="in">`Weekday`</span>, and <span class="in">`Time`</span>.</span>
+<span id="cb26-254"><a href="#cb26-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-255"><a href="#cb26-255" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Preparation</span></span>
+<span id="cb26-256"><a href="#cb26-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-259"><a href="#cb26-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-260"><a href="#cb26-260" aria-hidden="true" tabindex="-1"></a>train_data_class <span class="ot">&lt;-</span> train_data <span class="sc">|&gt;</span></span>
+<span id="cb26-261"><a href="#cb26-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_category =</span> <span class="fu">case_when</span>(</span>
+<span id="cb26-262"><a href="#cb26-262" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
+<span id="cb26-263"><a href="#cb26-263" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> tip <span class="sc">&lt;</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;Medium&quot;</span>,</span>
+<span id="cb26-264"><a href="#cb26-264" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;High&quot;</span></span>
+<span id="cb26-265"><a href="#cb26-265" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">factor</span>())</span>
+<span id="cb26-266"><a href="#cb26-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-267"><a href="#cb26-267" aria-hidden="true" tabindex="-1"></a>test_data_class <span class="ot">&lt;-</span> test_data <span class="sc">|&gt;</span></span>
+<span id="cb26-268"><a href="#cb26-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_category =</span> <span class="fu">case_when</span>(</span>
+<span id="cb26-269"><a href="#cb26-269" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
+<span id="cb26-270"><a href="#cb26-270" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> tip <span class="sc">&lt;</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;Medium&quot;</span>,</span>
+<span id="cb26-271"><a href="#cb26-271" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;High&quot;</span></span>
+<span id="cb26-272"><a href="#cb26-272" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">factor</span>())</span>
+<span id="cb26-273"><a href="#cb26-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-274"><a href="#cb26-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb26-275"><a href="#cb26-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-276"><a href="#cb26-276" aria-hidden="true" tabindex="-1"></a>test_data_class <span class="ot">&lt;-</span> test_data <span class="sc">|&gt;</span></span>
-<span id="cb26-277"><a href="#cb26-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_category =</span> <span class="fu">case_when</span>(</span>
-<span id="cb26-278"><a href="#cb26-278" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
-<span id="cb26-279"><a href="#cb26-279" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> tip <span class="sc">&lt;</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;Medium&quot;</span>,</span>
-<span id="cb26-280"><a href="#cb26-280" aria-hidden="true" tabindex="-1"></a>    tip <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;High&quot;</span></span>
-<span id="cb26-281"><a href="#cb26-281" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">factor</span>())</span>
-<span id="cb26-282"><a href="#cb26-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-283"><a href="#cb26-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-276"><a href="#cb26-276" aria-hidden="true" tabindex="-1"></a>We built a modeling recipe to handle dummy encoding for categorical predictors and normalization of numeric variables, which is essential for KNN to perform properly.</span>
+<span id="cb26-277"><a href="#cb26-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-280"><a href="#cb26-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-281"><a href="#cb26-281" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb26-282"><a href="#cb26-282" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parsnip)</span>
+<span id="cb26-283"><a href="#cb26-283" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(workflows)</span>
 <span id="cb26-284"><a href="#cb26-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-285"><a href="#cb26-285" aria-hidden="true" tabindex="-1"></a>We built a modeling recipe to handle dummy encoding for categorical predictors and normalization of numeric variables, which is essential for KNN to perform properly.</span>
-<span id="cb26-286"><a href="#cb26-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-289"><a href="#cb26-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-290"><a href="#cb26-290" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
-<span id="cb26-291"><a href="#cb26-291" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parsnip)</span>
-<span id="cb26-292"><a href="#cb26-292" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(workflows)</span>
-<span id="cb26-293"><a href="#cb26-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-294"><a href="#cb26-294" aria-hidden="true" tabindex="-1"></a>tip_class_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(tip_category <span class="sc">~</span> bill <span class="sc">+</span> party_size <span class="sc">+</span> gender <span class="sc">+</span> smoker <span class="sc">+</span> weekday <span class="sc">+</span> time, <span class="at">data =</span> train_data_class) <span class="sc">|&gt;</span></span>
-<span id="cb26-295"><a href="#cb26-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb26-296"><a href="#cb26-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span>
-<span id="cb26-297"><a href="#cb26-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-298"><a href="#cb26-298" aria-hidden="true" tabindex="-1"></a>knn_model <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-299"><a href="#cb26-299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;kknn&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-300"><a href="#cb26-300" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>)</span>
+<span id="cb26-285"><a href="#cb26-285" aria-hidden="true" tabindex="-1"></a>tip_class_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(tip_category <span class="sc">~</span> bill <span class="sc">+</span> party_size <span class="sc">+</span> gender <span class="sc">+</span> smoker <span class="sc">+</span> weekday <span class="sc">+</span> time, <span class="at">data =</span> train_data_class) <span class="sc">|&gt;</span></span>
+<span id="cb26-286"><a href="#cb26-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb26-287"><a href="#cb26-287" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span>
+<span id="cb26-288"><a href="#cb26-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-289"><a href="#cb26-289" aria-hidden="true" tabindex="-1"></a>knn_model <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-290"><a href="#cb26-290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;kknn&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-291"><a href="#cb26-291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>)</span>
+<span id="cb26-292"><a href="#cb26-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-293"><a href="#cb26-293" aria-hidden="true" tabindex="-1"></a>knn_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-294"><a href="#cb26-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(tip_class_recipe) <span class="sc">|&gt;</span></span>
+<span id="cb26-295"><a href="#cb26-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(knn_model)</span>
+<span id="cb26-296"><a href="#cb26-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-297"><a href="#cb26-297" aria-hidden="true" tabindex="-1"></a>knn_fit <span class="ot">&lt;-</span> knn_workflow <span class="sc">|&gt;</span></span>
+<span id="cb26-298"><a href="#cb26-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_data_class)</span>
+<span id="cb26-299"><a href="#cb26-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-300"><a href="#cb26-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb26-301"><a href="#cb26-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-302"><a href="#cb26-302" aria-hidden="true" tabindex="-1"></a>knn_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb26-303"><a href="#cb26-303" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(tip_class_recipe) <span class="sc">|&gt;</span></span>
-<span id="cb26-304"><a href="#cb26-304" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(knn_model)</span>
+<span id="cb26-302"><a href="#cb26-302" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictions and Evaluation</span></span>
+<span id="cb26-303"><a href="#cb26-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-304"><a href="#cb26-304" aria-hidden="true" tabindex="-1"></a>Using the trained KNN model, we predicted the <span class="in">`TipCategory`</span> for the test dataset. Below are the performance metrics obtained from the predictions:</span>
 <span id="cb26-305"><a href="#cb26-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-306"><a href="#cb26-306" aria-hidden="true" tabindex="-1"></a>knn_fit <span class="ot">&lt;-</span> knn_workflow <span class="sc">|&gt;</span></span>
-<span id="cb26-307"><a href="#cb26-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_data_class)</span>
-<span id="cb26-308"><a href="#cb26-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-309"><a href="#cb26-309" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-310"><a href="#cb26-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-311"><a href="#cb26-311" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictions and Evaluation</span></span>
-<span id="cb26-312"><a href="#cb26-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-313"><a href="#cb26-313" aria-hidden="true" tabindex="-1"></a>Using the trained KNN model, we predicted the <span class="in">`TipCategory`</span> for the test dataset. Below are the performance metrics obtained from the predictions:</span>
-<span id="cb26-314"><a href="#cb26-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-317"><a href="#cb26-317" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-318"><a href="#cb26-318" aria-hidden="true" tabindex="-1"></a>knn_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_fit, <span class="at">new_data =</span> test_data_class) <span class="sc">|&gt;</span></span>
-<span id="cb26-319"><a href="#cb26-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data_class)</span>
-<span id="cb26-320"><a href="#cb26-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-321"><a href="#cb26-321" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename prediction column if needed</span></span>
-<span id="cb26-322"><a href="#cb26-322" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;.pred_class&quot;</span> <span class="sc">%in%</span> <span class="fu">names</span>(knn_predictions)) {</span>
-<span id="cb26-323"><a href="#cb26-323" aria-hidden="true" tabindex="-1"></a>  knn_predictions <span class="ot">&lt;-</span> knn_predictions <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">.pred =</span> .pred_class)</span>
-<span id="cb26-324"><a href="#cb26-324" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-308"><a href="#cb26-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-309"><a href="#cb26-309" aria-hidden="true" tabindex="-1"></a>knn_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_fit, <span class="at">new_data =</span> test_data_class) <span class="sc">|&gt;</span></span>
+<span id="cb26-310"><a href="#cb26-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data_class)</span>
+<span id="cb26-311"><a href="#cb26-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-312"><a href="#cb26-312" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb26-313"><a href="#cb26-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-314"><a href="#cb26-314" aria-hidden="true" tabindex="-1"></a>knn_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, precision, recall, f_meas)(</span>
+<span id="cb26-315"><a href="#cb26-315" aria-hidden="true" tabindex="-1"></a>  knn_predictions, <span class="at">truth =</span> tip_category, <span class="at">estimate =</span> .pred_class</span>
+<span id="cb26-316"><a href="#cb26-316" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-317"><a href="#cb26-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-318"><a href="#cb26-318" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(knn_metrics)</span>
+<span id="cb26-319"><a href="#cb26-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-320"><a href="#cb26-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-321"><a href="#cb26-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-322"><a href="#cb26-322" aria-hidden="true" tabindex="-1"></a>These metrics reflect macro-averaged scores across the three classes: <span class="in">`Low`</span>, <span class="in">`Medium`</span>, and <span class="in">`High`</span>.</span>
+<span id="cb26-323"><a href="#cb26-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-324"><a href="#cb26-324" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb26-325"><a href="#cb26-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-326"><a href="#cb26-326" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb26-326"><a href="#cb26-326" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpretation</span></span>
 <span id="cb26-327"><a href="#cb26-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-328"><a href="#cb26-328" aria-hidden="true" tabindex="-1"></a>knn_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, precision, recall, f_meas)(</span>
-<span id="cb26-329"><a href="#cb26-329" aria-hidden="true" tabindex="-1"></a>  knn_predictions, <span class="at">truth =</span> tip_category, <span class="at">estimate =</span> .pred</span>
-<span id="cb26-330"><a href="#cb26-330" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb26-331"><a href="#cb26-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-332"><a href="#cb26-332" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(knn_metrics)</span>
+<span id="cb26-328"><a href="#cb26-328" aria-hidden="true" tabindex="-1"></a>The KNN classification model achieved a **moderate accuracy of 62.2%**, meaning it correctly predicted the tip category for about two-thirds of the test cases. While this is better than random guessing, the model&#39;s precision and F1 score (both around 53.3%) highlight its limited ability to make consistent, confident predictions across all classes.</span>
+<span id="cb26-329"><a href="#cb26-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-330"><a href="#cb26-330" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Precision** of 54.5% indicates that when the model predicts a category, it&#39;s right about half the time.</span>
+<span id="cb26-331"><a href="#cb26-331" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Recall** of 58.5% means it captures a bit more than half of the actual categories present in the data.</span>
+<span id="cb26-332"><a href="#cb26-332" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**F1 Score**, which balances both precision and recall, reinforces the modest predictive power of the model.</span>
 <span id="cb26-333"><a href="#cb26-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-334"><a href="#cb26-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-334"><a href="#cb26-334" aria-hidden="true" tabindex="-1"></a>The model appears to perform best on the **Medium** tip category — likely because it represents the bulk of the data, making it easier to classify. In contrast, **Low** and **High** tip classes are less predictable, possibly because they’re driven by factors not captured in the dataset, such as service quality, server friendliness, or customer mood.</span>
 <span id="cb26-335"><a href="#cb26-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-336"><a href="#cb26-336" aria-hidden="true" tabindex="-1"></a>These metrics reflect macro-averaged scores across the three classes: <span class="in">`Low`</span>, <span class="in">`Medium`</span>, and <span class="in">`High`</span>.</span>
+<span id="cb26-336"><a href="#cb26-336" aria-hidden="true" tabindex="-1"></a>Ultimately, the KNN model offers a decent, though limited, glimpse into tip classification and would likely benefit from more granular data or the inclusion of external features like server ratings or time spent at the table.</span>
 <span id="cb26-337"><a href="#cb26-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-338"><a href="#cb26-338" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb26-338"><a href="#cb26-338" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion and Recommendations</span></span>
 <span id="cb26-339"><a href="#cb26-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-340"><a href="#cb26-340" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpretation</span></span>
+<span id="cb26-340"><a href="#cb26-340" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Takeaways</span></span>
 <span id="cb26-341"><a href="#cb26-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-342"><a href="#cb26-342" aria-hidden="true" tabindex="-1"></a>The KNN classification model achieved a **moderate accuracy of 62.2%**, meaning it correctly predicted the tip category for about two-thirds of the test cases. While this is better than random guessing, the model&#39;s precision and F1 score (both around 53.3%) highlight its limited ability to make consistent, confident predictions across all classes.</span>
+<span id="cb26-342"><a href="#cb26-342" aria-hidden="true" tabindex="-1"></a>This analysis aimed to decode tipping behavior using the TIPS dataset and answer three core questions:</span>
 <span id="cb26-343"><a href="#cb26-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-344"><a href="#cb26-344" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Precision** of 54.5% indicates that when the model predicts a category, it&#39;s right about half the time.</span>
-<span id="cb26-345"><a href="#cb26-345" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Recall** of 58.5% means it captures a bit more than half of the actual categories present in the data.</span>
-<span id="cb26-346"><a href="#cb26-346" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**F1 Score**, which balances both precision and recall, reinforces the modest predictive power of the model.</span>
-<span id="cb26-347"><a href="#cb26-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-348"><a href="#cb26-348" aria-hidden="true" tabindex="-1"></a>The model appears to perform best on the **Medium** tip category — likely because it represents the bulk of the data, making it easier to classify. In contrast, **Low** and **High** tip classes are less predictable, possibly because they’re driven by factors not captured in the dataset, such as service quality, server friendliness, or customer mood.</span>
+<span id="cb26-344"><a href="#cb26-344" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Which factors most strongly influence tipping?**\</span>
+<span id="cb26-345"><a href="#cb26-345" aria-hidden="true" tabindex="-1"></a>    The total bill amount emerged as the most consistent predictor of tipping behavior. Our linear regression model revealed a statistically significant *negative* relationship between <span class="in">`Bill`</span> and <span class="in">`TipPercentage`</span>, suggesting that as the bill increases, the tip percentage tends to shrink — a reflection of tipping habits that prioritize total amount over proportion.</span>
+<span id="cb26-346"><a href="#cb26-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-347"><a href="#cb26-347" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**How well can we predict tipping behavior using machine learning?**\</span>
+<span id="cb26-348"><a href="#cb26-348" aria-hidden="true" tabindex="-1"></a>    The linear regression model explained only about **12.8%** of the variance in tip percentages, indicating that important predictors are likely missing from the dataset. On the other hand, the KNN classification model achieved **62.2% accuracy** when predicting whether a tip fell into a <span class="in">`Low`</span>, <span class="in">`Medium`</span>, or <span class="in">`High`</span> category. While this model performed decently, especially for the <span class="in">`Medium`</span> class, it struggled with precision and recall across all classes — particularly at the extremes.</span>
 <span id="cb26-349"><a href="#cb26-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-350"><a href="#cb26-350" aria-hidden="true" tabindex="-1"></a>Ultimately, the KNN model offers a decent, though limited, glimpse into tip classification and would likely benefit from more granular data or the inclusion of external features like server ratings or time spent at the table.</span>
-<span id="cb26-351"><a href="#cb26-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-352"><a href="#cb26-352" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion and Recommendations</span></span>
-<span id="cb26-353"><a href="#cb26-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-354"><a href="#cb26-354" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Takeaways</span></span>
-<span id="cb26-355"><a href="#cb26-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-356"><a href="#cb26-356" aria-hidden="true" tabindex="-1"></a>This analysis aimed to decode tipping behavior using the TIPS dataset and answer three core questions:</span>
-<span id="cb26-357"><a href="#cb26-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-358"><a href="#cb26-358" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Which factors most strongly influence tipping?**\</span>
-<span id="cb26-359"><a href="#cb26-359" aria-hidden="true" tabindex="-1"></a>    The total bill amount emerged as the most consistent predictor of tipping behavior. Our linear regression model revealed a statistically significant *negative* relationship between <span class="in">`Bill`</span> and <span class="in">`TipPercentage`</span>, suggesting that as the bill increases, the tip percentage tends to shrink — a reflection of tipping habits that prioritize total amount over proportion.</span>
-<span id="cb26-360"><a href="#cb26-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-361"><a href="#cb26-361" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**How well can we predict tipping behavior using machine learning?**\</span>
-<span id="cb26-362"><a href="#cb26-362" aria-hidden="true" tabindex="-1"></a>    The linear regression model explained only about **12.8%** of the variance in tip percentages, indicating that important predictors are likely missing from the dataset. On the other hand, the KNN classification model achieved **62.2% accuracy** when predicting whether a tip fell into a <span class="in">`Low`</span>, <span class="in">`Medium`</span>, or <span class="in">`High`</span> category. While this model performed decently, especially for the <span class="in">`Medium`</span> class, it struggled with precision and recall across all classes — particularly at the extremes.</span>
+<span id="cb26-350"><a href="#cb26-350" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**What can restaurants or service staff learn from this?**\</span>
+<span id="cb26-351"><a href="#cb26-351" aria-hidden="true" tabindex="-1"></a>    Although bill size and party size offer some predictive power, many tipping decisions are likely influenced by untracked human factors: quality of service, mood, server friendliness, and cultural expectations. Thus, while basic metrics can help forecast general trends, they cannot fully explain customer generosity.</span>
+<span id="cb26-352"><a href="#cb26-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-353"><a href="#cb26-353" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb26-354"><a href="#cb26-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-355"><a href="#cb26-355" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommendations for Practice and Future Analysis</span></span>
+<span id="cb26-356"><a href="#cb26-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-357"><a href="#cb26-357" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Collect richer data**: Variables such as customer satisfaction, duration of service, or server ID could significantly improve prediction models.</span>
+<span id="cb26-358"><a href="#cb26-358" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Model fine-tuning**: Future work could explore more sophisticated models (e.g., random forests or support vector machines) and conduct hyperparameter tuning for improved accuracy.</span>
+<span id="cb26-359"><a href="#cb26-359" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Focus on experience**: Since service quality likely plays a major hidden role in tipping, efforts to train, retain, and reward staff performance may have the biggest impact — even more than customer bill size or party demographics.</span>
+<span id="cb26-360"><a href="#cb26-360" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Don’t over-rely on bill size**: While it’s correlated with tipping, it&#39;s not always predictive of generosity. Focus on customer satisfaction instead.</span>
+<span id="cb26-361"><a href="#cb26-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-362"><a href="#cb26-362" aria-hidden="true" tabindex="-1"></a>Tipping is a behavior wrapped in culture, psychology, and individual judgment. This project reveals that while we can model some of it, the most meaningful factors may lie outside what any dataset can fully capture.</span>
 <span id="cb26-363"><a href="#cb26-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-364"><a href="#cb26-364" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**What can restaurants or service staff learn from this?**\</span>
-<span id="cb26-365"><a href="#cb26-365" aria-hidden="true" tabindex="-1"></a>    Although bill size and party size offer some predictive power, many tipping decisions are likely influenced by untracked human factors: quality of service, mood, server friendliness, and cultural expectations. Thus, while basic metrics can help forecast general trends, they cannot fully explain customer generosity.</span>
-<span id="cb26-366"><a href="#cb26-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-367"><a href="#cb26-367" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb26-368"><a href="#cb26-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-369"><a href="#cb26-369" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommendations for Practice and Future Analysis</span></span>
-<span id="cb26-370"><a href="#cb26-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-371"><a href="#cb26-371" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Collect richer data**: Variables such as customer satisfaction, duration of service, or server ID could significantly improve prediction models.</span>
-<span id="cb26-372"><a href="#cb26-372" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Model fine-tuning**: Future work could explore more sophisticated models (e.g., random forests or support vector machines) and conduct hyperparameter tuning for improved accuracy.</span>
-<span id="cb26-373"><a href="#cb26-373" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Focus on experience**: Since service quality likely plays a major hidden role in tipping, efforts to train, retain, and reward staff performance may have the biggest impact — even more than customer bill size or party demographics.</span>
-<span id="cb26-374"><a href="#cb26-374" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Don’t over-rely on bill size**: While it’s correlated with tipping, it&#39;s not always predictive of generosity. Focus on customer satisfaction instead.</span>
-<span id="cb26-375"><a href="#cb26-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-376"><a href="#cb26-376" aria-hidden="true" tabindex="-1"></a>Tipping is a behavior wrapped in culture, psychology, and individual judgment. This project reveals that while we can model some of it, the most meaningful factors may lie outside what any dataset can fully capture.</span>
-<span id="cb26-377"><a href="#cb26-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-378"><a href="#cb26-378" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb26-379"><a href="#cb26-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-380"><a href="#cb26-380" aria-hidden="true" tabindex="-1"></a><span class="fu">## Note</span></span>
-<span id="cb26-381"><a href="#cb26-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-382"><a href="#cb26-382" aria-hidden="true" tabindex="-1"></a>Some parts of this report — including formatting, visuals, and debugging — were done with the help of AI tools. Everything that was generated using AI was fully reviewed, understood, and interpreted by me before being included in the final report.</span>
+<span id="cb26-364"><a href="#cb26-364" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb26-365"><a href="#cb26-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-366"><a href="#cb26-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Note</span></span>
+<span id="cb26-367"><a href="#cb26-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-368"><a href="#cb26-368" aria-hidden="true" tabindex="-1"></a>Some parts of this report — including formatting, visuals, and debugging — were done with the help of AI tools. Everything that was generated using AI was fully reviewed, understood, and interpreted by me before being included in the final report.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
