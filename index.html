@@ -5,11 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Personal Portfolio Website </title>
+    <meta name="description" content="Prabin Roka — CS & Digital Marketing student at the College of Idaho. Passionate about Machine Learning, NLP, and building a Nepali language model.">
+    <meta name="keywords" content="Prabin Roka, Computer Science, Digital Marketing, Machine Learning, NLP, Nepali, College of Idaho, Portfolio">
+    <meta name="author" content="Prabin Roka">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/0850574f00.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="header">
+    <div id="seeking-banner">
+        <p>🎓 Currently seeking Summer 2026 research opportunities and internships in Data Science, ML, and Digital Marketing.</p>
+    </div>
     <div class="container">
         <nav>
             <img src="logo.png" class="logo">
@@ -17,7 +26,7 @@
                 <li><a href='#header'>Home</a></li>
                 <li><a href='#about'>About</a></li>
                 <li><a href='#Services'>Services</a></li>
-                <!-- <li><a href='#portfolio'>Portfolio</a></li> -->
+                <li><a href='#portfolio'>Portfolio</a></li>
                 <li><a href='#contact'>Contact</a></li>
                 <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
             </ul>
@@ -38,55 +47,59 @@
             </div>
             <div class="about-col-2">
                 <h1 class="sub-title">About Me</h1>
-                <p>Hello! I'm Prabin Roka, a dedicated student, learner, and explorer from Nepal—a country known for its breathtaking landscapes and rich cultural heritage.</p>
+                <p>Hello! I'm Prabin Roka — a student, builder, and curious mind from Nepal, a country known for its breathtaking landscapes and rich cultural heritage.</p>
 
                 <br>
                 
-                <p>My academic journey led me to the College of Idaho, where I am double majoring in Computer Science Mathematics, and  Digital Marketing, alongside a minor in Arts. My passion lies at the intersection of technology and language, and I am particularly interested in Machine Learning and Natural Language Processing.</p>
+                <p>I'm currently at the College of Idaho, pursuing a double major in Computer Science & Mathematics and Digital Marketing, with a minor in Arts. It's an unconventional combination, but it reflects exactly how I think — I'm drawn to problems that sit at the intersection of technology, creativity, and human experience. My academic focus leans toward Machine Learning and Natural Language Processing, and I've maintained a 3.768 GPA with Dean's List recognition three years running.</p>
                 
                 <br>
                 
-                <p>One of my long-term aspirations is to contribute to linguistic diversity in AI. While most language models primarily cater to widely spoken languages like English, I aim to develop a language model for Nepali. By doing so, I hope to enhance the digital representation of the Nepali language and culture, making AI more inclusive and accessible for Nepali speakers worldwide.</p>
+                <p>One of my deepest long-term goals is to build a language model for Nepali. Most of the world's AI is built around a handful of dominant languages, and I believe that's a gap worth closing. As someone who grew up speaking Nepali, Hindi, and English, linguistic diversity in AI isn't just an academic interest for me — it's personal.</p>
                 
                 <br>
                 
-                <p>With a strong foundation in programming, data analysis, and machine learning, I am eager to explore new challenges, collaborate on meaningful projects, and continue learning in this ever-evolving field.</p>
+                <p>Beyond coursework, I've worked on statistical research projects analyzing real-world data, explored data visualization and analytics, and continuously look for opportunities to apply what I learn to problems that actually matter. I'm currently seeking research and graduate opportunities that push me further into applied ML and data science.</p>
                 
                 <br>
                 
-                <p>Let’s connect and grow together!</p>
+                <p>I'm a quick learner, a collaborative teammate, and someone who genuinely enjoys the process of figuring things out — whether that's debugging code, analyzing a dataset, or building something from scratch.</p>
+                
+                <br>
+                
+                <p>Let's connect and build something meaningful together.</p>
                 
                     <div class="tab-titles">
                       <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
                       <p class="tab-links" onclick="opentab('experience')">Experience</p> 
-                      <p class="tab-links" onclick="opentab('education')">Education</p>                         
+                      <p class="tab-links" onclick="opentab('education')">Education</p>
+                      <p class="tab-links" onclick="opentab('projects')">Projects</p>                         
                     </div>
                     <div class="tab-contents active-tab" id="skills">
                         <ul>
-                            <li><span>Programming Languages</span><br>Python (Proficient), R (Proficient), SQL (Intermediate), HTML (Intermediate), C+ (Basic)</li>
-                            <li><span>Data Analysis & Visualization</span><br> tidyverse (Proficient), tidymodels (Proficient), ggplot2 (Proficient) </li>
-                            <li><span>Statistical & Machine Learning Techniques</span><br>Linear Regression, Multiple Regression, K-Nearest Neighbors, Logistic Regression, Cross-Validation, Model Comparison</li>
-                            <li><span>Tools & Platforms</span><br>(Proficient), All Microsoft Applications (Proficient), Tableau (Basic), Toast, POS (Point of Sale) </li>
+                            <li><span>Programming Languages</span><br>Python (Proficient), R (Proficient), SQL (Intermediate), HTML/CSS (Intermediate), C++ (Basic)</li>
+                            <li><span>Data Analysis & Machine Learning</span><br>Linear & Multiple Regression, K-Nearest Neighbors, Logistic Regression, Cross-Validation, Model Comparison, Hypothesis Testing</li>
+                            <li><span>Libraries & Frameworks</span><br>tidyverse, tidymodels, ggplot2, FastAPI</li>
+                            <li><span>Digital Marketing</span><br>SEO, Keyword Research, Google Search & Display Ads, Consumer Behavior Analysis, Marketing Communications</li>
+                            <li><span>Tools & Platforms</span><br>Git (Proficient), Tableau (Proficient), Microsoft Office Suite (Proficient), SQLite, POS Systems</li>
                         </ul>
                     </div>
                     <div class="tab-contents" id="experience">
                         <ul>
-                            <li><span>August 2022 - September 2022</span>
-                                <br><br>
-                                Nepal Red Cross Society, Kathmandu — Data Entry Operator 
-                                <br><br>
-                                Managed and entered donor health data, ensuring accuracy and completeness for blood bank operations.
-                                <br><br>
-                                Contributed to a nationwide blood donation campaign, supporting life-saving efforts through meticulous data handling. </li>
-                            <!-- <li><span>MazeMaster Project (2021)</span><br>Built and programmed a robot in Python to navigate mazes and collect objects, earning positive feedback during the competition.</li>
-                            <li><span>Chopstick Project (2022)</span><br>Collaborated on a community initiative to improve education, healthcare, and inclusivity in rural areas, focusing on LGBTQ support. Worked with locals to identify needs and implement strategies for lasting impact.</li> -->
+                            <li><span>Data Entry Operator — Nepal Red Cross Society, Kathmandu</span><br>August 2022 – September 2022<br><br>Managed and entered donor health records for blood bank operations, maintaining accuracy across a high-volume dataset. Contributed to a nationwide blood donation campaign through meticulous data handling and quality checks.</li>
                         </ul>
                     </div>
                     <div class="tab-contents" id="education">
                         <ul>
-                            <li><span>2018 - 2020</span><br>RamShah MA VI, Anbukhaireni, Tanahun, Nepal —SEE(Secondary Education Examination)</li>
-                            <li><span>2020 - 2022</span><br>Nepal Police School, Kavre, Kathmandu Nepal — SLC(School Leaving Certificate)</li>
-                            <li><span>2023 - Present</span><br>The College of Idaho, Cleveland, Blvd, Caldwell— Computer Science and Digital Marketing(Undergraduate)</li>
+                            <li><span>The College of Idaho, Caldwell, ID — Aug 2023 – May 2027 (Expected)</span><br>B.A. in Computer Science & Mathematics, and Digital Marketing | Minor in Arts | GPA: 3.768 | Dean's List: 3 consecutive years</li>
+                            <li><span>Nepal Police School, Kavre, Kathmandu — 2020 – 2022</span><br>School Leaving Certificate (SLC) | GPA: 3.67</li>
+                            <li><span>RamShah MA VI, Tanahun, Nepal — 2018 – 2020</span><br>Secondary Education Examination (SEE) | GPA: 3.90</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="projects">
+                        <ul>
+                            <li><span>AI Fan Engagement Agent</span><br>Python, FastAPI, SQLite, OpenRouter API, HTML/CSS/JS<br><br>Built a full-stack web app where sports fans can chat with an AI agent, take AI-generated quizzes, and predict game outcomes. Designed an agentic backend that routes user input to the right tool — chat, quiz generation, predictions, and reward tracking. Integrated OpenRouter API to power the LLM and built a persistent memory system using SQLite to store user profiles and history across sessions. Also developed a fan reward system with points, badges, and live leaderboard rankings.</li>
+                            <li><span>MAT 212 Statistical Research</span><br>R, ggplot2, tidymodels<br><br>Analyzed a real-world dataset to explore how education level and age predict financial wellbeing outcomes. Ran exploratory data analysis, built multiple regression models, and validated findings through a literature review. Presented results as a formal poster and authored a supplementary written report.</li>
                         </ul>
                     </div>   
             </div>
@@ -94,87 +107,138 @@
     </div>
 </div>
 
+<div id="extras">
+    <div class="container">
+        <div class="extras-grid">
+            <div class="extras-box">
+                <h3>Relevant Coursework</h3>
+                <ul>
+                    <li>Statistical Machine Learning</li>
+                    <li>Design and Analysis of Algorithms</li>
+                    <li>Multiple Regression Analysis</li>
+                    <li>Data Analytics</li>
+                    <li>Linear Algebra</li>
+                    <li>Discrete Mathematics</li>
+                    <li>Analytical Physics</li>
+                    <li>Computer Science I & II</li>
+                </ul>
+            </div>
+            <div class="extras-box">
+                <h3>Languages</h3>
+                <ul>
+                    <li><span>English</span> — Fluent</li>
+                    <li><span>Nepali</span> — Fluent</li>
+                    <li><span>Hindi</span> — Fluent</li>
+                </ul>
+                <h3 style="margin-top:30px;">Awards & Honors</h3>
+                <ul>
+                    <li><span>Dean's List</span> — 3 Consecutive Years</li>
+                    <li><span>Interschool Robotics Event</span> — Winner 2021</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="Services">
     <div class="container">
-        <h1 class="sub-title">My Skills</h1>
+        <h1 class="sub-title">What I Do</h1>
         <div class="services-list">
             <div>
-                <i class="fa-solid fa-crop"></i>
-                <h2>CS/Digital Marketing</h2>
-                <p>Skilled in designing web and app interfaces with a focus on user experience. Proficient in Photoshop for creating visuals and marketing assets.</p>
-                <a href="#">Learn more</a>
+                <i class="fa-solid fa-chart-line"></i>
+                <h2>Data Science & ML</h2>
+                <p>Built around Python, R, and statistical modeling. Experienced in regression analysis, classification, cross-validation, and building ML pipelines using tidymodels. Comfortable taking a dataset from raw to insight.</p>
+                <a href="#contact">Get in touch</a>
             </div>
             <div>
                 <i class="fa-solid fa-globe"></i>
                 <h2>Web Development</h2>
-                <p>Expert in HTML, CSS, and JavaScript with hands-on experience in building dynamic websites. Proficient in React for frontend development and RESTful APIs for backend integration.</p>
-                <a href="#">Learn more</a>
+                <p>Experienced in HTML, CSS, JavaScript, and building full-stack applications. Built a production-ready web app using FastAPI with a persistent SQLite backend and a dynamic frontend.</p>
+                <a href="#contact">Get in touch</a>
+            </div>
+            <div>
+                <i class="fa-solid fa-bullhorn"></i>
+                <h2>Digital Marketing</h2>
+                <p>Skilled in SEO, keyword research, Google Search and Display ad campaigns, consumer behavior analysis, and marketing communications. Combines analytical thinking with creative strategy.</p>
+                <a href="#contact">Get in touch</a>
             </div>
             <div>
                 <i class="fa-solid fa-code"></i>
-                <h2>Programming Languages</h2>
-                <p>Experienced in Python, Java, C++, and SQL for developing applications and managing databases.</p>
-                <a href="#">Learn more</a>
+                <h2>Programming & Algorithms</h2>
+                <p>Proficient in Python and R, with working knowledge of SQL, C++, and HTML. Coursework includes Design and Analysis of Algorithms, Discrete Mathematics, and Linear Algebra.</p>
+                <a href="#contact">Get in touch</a>
             </div>
-            <div>
-                <i class="fa-brands fa-uikit"></i>
-                <h2>UI/UX Design</h2>
-                <p>I create user-centric designs with a focus on usability. Skilled in tools like Figma, Adobe XD, and Photoshop for designing seamless interfaces.</p>
-                <a href="#">Learn more</a>
-            </div>    
         </div>
     </div>
 </div>
-<!-- 
+
 <div id="portfolio">
     <div class="container">
         <h1 class="sub-title">My Work</h1>
         <div class="work-list">
             <div class="work">
-               <img src="work-1.png"> 
-               <div class="layer">
-                <h3>Social Media App</h3>
-                <p>App ko barema Sekdini halka</p>
-                <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
-               </div>
+                <div class="work-info">
+                    <h3>AI Fan Engagement Agent</h3>
+                    <p>A full-stack web app where sports fans chat with an AI agent, take AI-generated quizzes, and predict game outcomes. Built with Python, FastAPI, SQLite, and OpenRouter API.</p>
+                    <div class="work-tags">
+                        <span>Python</span>
+                        <span>FastAPI</span>
+                        <span>SQLite</span>
+                        <span>LLM</span>
+                    </div>
+                    <a href="https://github.com/Prabinr2004/CSCI_Final_proJect" target="_blank" class="btn btn2" style="margin:20px 0 0;">View on GitHub</a>
+                </div>
             </div>
             <div class="work">
-                <img src="work-2.png">
-                <div class="layer">
-                    <h3> App</h3>
-                    <p>App ko barema Sekdini halka</p>
-                    <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
-                   </div> 
-             </div>
-             <div class="work">
-                <img src="work-3.png">
-                <div class="layer">
-                    <h3>Online Shopping App</h3>
-                    <p>App ko barema Sekdini halka</p>
-                    <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
-                   </div> 
-             </div>
+                <div class="work-info">
+                    <h3>MAT 212 Statistical Research</h3>
+                    <div class="tab-titles" style="margin: 15px 0 25px;">
+                        <p class="tab-links active-link" onclick="opentab2('tips')">Tips Analysis</p>
+                        <p class="tab-links" onclick="opentab2('finwellbeing')">Financial Wellbeing</p>
+                    </div>
+                    <div class="tab-contents active-tab" id="tips">
+                        <p>Analyzed the TIPS dataset to decode restaurant tipping behavior. Explored how bill size, party size, time of day, and other factors influence tip amounts and percentages. Built and compared Ridge Regression and KNN models after feature selection — achieving R² of 0.876 for tip percentage prediction and 86.5% accuracy for tip category classification.</p>
+                        <div class="work-tags" style="margin-top:15px;">
+                            <span>R</span>
+                            <span>ggplot2</span>
+                            <span>tidymodels</span>
+                            <span>Ridge Regression</span>
+                            <span>KNN</span>
+                            <span>Feature Selection</span>
+                        </div>
+                        <a href="SampleAnalysis.html" target="_blank" class="btn btn2" style="margin:20px 0 0;">View Analysis</a>
+                    </div>
+                    <div class="tab-contents" id="finwellbeing">
+                        <p>Course research project investigating how education level and age predict financial wellbeing outcomes. Collected and cleaned a real-world dataset, ran exploratory data analysis, built multiple regression models, and validated findings through a literature review. Presented results as a formal poster with a supplementary written report.</p>
+                        <div class="work-tags" style="margin-top:15px;">
+                            <span>R</span>
+                            <span>ggplot2</span>
+                            <span>tidymodels</span>
+                            <span>Multiple Regression</span>
+                            <span>EDA</span>
+                            <span>Literature Review</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <a href="#" class="btn">See more</a>
     </div>
 </div>
- -->
+
 <div id="contact">
     <div class="container">
         <div class="row">
             <div class="contact-left">
                 <h1 class="sub-title">Contact Me</h1>
                 <p><i class="fa-solid fa-paper-plane"></i> prabincxettri@gmail.com</p>
-                <p><i class="fa-solid fa-square-phone"></i> (208)-602-0627</p>
+                <p><i class="fa-solid fa-square-phone"></i> (208) 602-0627</p>
                 <div class="social-icons">
-                    <a href="https://www.instagram.com/prabin_r.cxettrii/"><i class="fa-brands fa-instagram"></i></a>
-                    <a href=""><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href=""><i class="fa-brands fa-square-github"></i></a>
-                    <a href=""><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/prabin_r.cxettrii/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/prabin-roka-0596b9307/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://github.com/Prabinr2004" target="_blank"><i class="fa-brands fa-square-github"></i></a>
+                    <a href="https://x.com/PrabinRoka26045" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
                 </div>
-                <a href="CV HOLA.pdf" class="btn btn2">Download CV</a>
-                <!-- <a href="Cover letter-Mat427.pdf" class="btn btn2">Download Coverletter</a> -->
-                <a href="Sample_Analysis.html" class="btn btn2">View Sample Analysis</a>
+                <a href="Resume_s.pdf" class="btn btn2">View CV</a>
             </div>
             <div class="contact-right">
                 <form name="submit-to-google-sheet">
@@ -188,7 +252,7 @@
         </div>
     </div>
     <div class="copyright">
-        <p>Copyright © 2024 Prabin Roka.<i class="fa-regular fa-star"></i> All Rights Reserved</p>
+        <p>Copyright © 2024-2026 Prabin Roka.<i class="fa-regular fa-star"></i> All Rights Reserved</p>
     </div>
 </div>
 
@@ -205,6 +269,16 @@
         for(tabcontent of tabcontents){
             tabcontent.classList.remove("active-tab");
         }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab");
+    }
+
+    var tablinks2 = document.querySelectorAll("#portfolio .tab-links");
+    var tabcontents2 = document.querySelectorAll("#portfolio .tab-contents");
+
+    function opentab2(tabname){
+        tablinks2.forEach(link => link.classList.remove("active-link"));
+        tabcontents2.forEach(content => content.classList.remove("active-tab"));
         event.currentTarget.classList.add("active-link");
         document.getElementById(tabname).classList.add("active-tab");
     }

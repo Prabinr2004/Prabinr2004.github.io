@@ -175,8 +175,6 @@ nav ul li a:hover::after{
     transform: translateY(-10px);
 }
 
-#yadekhihidegareko
-
 #portfolio{
     padding: 50px 0;
 }
@@ -249,9 +247,115 @@ nav ul li a:hover::after{
 }
 .btn:hover{
     background: #ff004f;
-} 
+}
 
-#hyasumma 
+#seeking-banner{
+    width: 100%;
+    background: #ff004f;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 0.3px;
+}
+
+#extras{
+    padding: 60px 0;
+    color: #ababab;
+}
+.extras-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+.extras-box{
+    background: #262626;
+    padding: 40px;
+    border-radius: 10px;
+    transition: background 0.5s, transform 0.5s;
+}
+.extras-box:hover{
+    background: #ff004f;
+    transform: translateY(-10px);
+}
+.extras-box:hover h3{
+    color: #fff;
+}
+.extras-box:hover ul li span{
+    color: #fff;
+}
+.extras-box h3{
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 20px;
+}
+.extras-box ul{
+    list-style: none;
+    padding: 0;
+}
+.extras-box ul li{
+    margin: 10px 0;
+    font-size: 14px;
+}
+.extras-box ul li span{
+    color: #b54769;
+}
+
+.work-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+.work{
+    background: #262626;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.5s;
+}
+.work:hover{
+    background: #ff004f;
+    transform: translateY(-10px);
+}
+.work:hover .work-info p{
+    color: #fff;
+}
+.work:hover .work-tags span{
+    background: transparent;
+    color: #fff;
+    border-color: #fff;
+}
+.work-info{
+    padding: 30px;
+}
+.work-info h3{
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: #fff;
+}
+.work-info p{
+    font-size: 14px;
+    color: #ababab;
+    line-height: 1.8;
+}
+.work-tags{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.work-tags span{
+    background: #1a1a1a;
+    color: #ff004f;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #ff004f;
+}
 
 .contact-left{
     flex-basis: 35%;
