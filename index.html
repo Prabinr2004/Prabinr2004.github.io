@@ -22,7 +22,7 @@
 <div id="header">
     <!-- Red announcement banner -->
     <div id="announcement-banner">
-        <p>🎓 Currently seeking Fall 2026 research opportunities and internships in Data Science, ML, and Digital Marketing.</p>
+        <p>🎓 From Nepal to Idaho — exploring AI, machine learning, and how technology can better understand underrepresented languages.</p>
     </div>
  
     <!-- Header content -->
@@ -33,9 +33,9 @@
             <ul id="sidemenu">
                 <li><a href='#header'>Home</a></li>
                 <li><a href='#about'>About</a></li>
+                <li><a href='#portfolio'>Portfolio</a></li>
                 <li><a href='#Services'>Skills</a></li>
                 <li><a href='#certifications'>Certifications</a></li>
-                <li><a href='#portfolio'>Portfolio</a></li>
                 <li><a href='#contact'>Contact</a></li>
                 <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
             </ul>
@@ -179,7 +179,7 @@
                     </div>
                     <div class="tab-contents" id="projects">
                         <ul>
-                            <li><span>AI Fan Engagement Agent</span><br>Python, FastAPI, SQLite, OpenRouter API, HTML/CSS/JS<br><br>Built a full-stack web app where sports fans can chat with an AI agent, take AI-generated quizzes, and predict game outcomes. Designed an agentic backend that routes user input to the right tool — chat, quiz generation, predictions, and reward tracking. Integrated OpenRouter API to power the LLM and built a persistent memory system using SQLite to store user profiles and history across sessions. Also developed a fan reward system with points, badges, and live leaderboard rankings.</li>
+                            <li><span>AI Fan Engagement Agent</span><br>Python, FastAPI, SQLite, OpenRouter API, HTML/CSS/JS<br><br>I wanted to see whether I could build an AI system that did more than just chat. I built a full-stack sports platform where an AI agent routes users between conversation, quizzes, predictions, rewards, and persistent memory. The backend uses FastAPI and SQLite to store user profiles and history across sessions, while the reward system tracks points, badges, and live leaderboard rankings.</li>
                             <li><span>MAT 212 Statistical Research</span><br>R, ggplot2, tidymodels<br><br>Analyzed a real-world dataset to explore how education level and age predict financial wellbeing outcomes. Ran exploratory data analysis, built multiple regression models, and validated findings through a literature review. Presented results as a formal poster and authored a supplementary written report.</li>
                         </ul>
                     </div>   
@@ -292,7 +292,8 @@
             <div class="work">
                 <div class="work-info">
                     <h3>AI Fan Engagement Agent</h3>
-                    <p>A full-stack web app where sports fans chat with an AI agent, take AI-generated quizzes, and predict game outcomes. Built with Python, FastAPI, SQLite, and OpenRouter API.</p>
+                    <p>I wanted to see whether I could build an AI system that did more than just chat. I built a full-stack sports platform where an AI agent routes users between quizzes, predictions, conversation, rewards, and persistent memory.</p>
+                    <p style="margin-top:12px;">Built with Python, FastAPI, SQLite, and OpenRouter API.</p>
                     <div class="work-tags">
                         <span>Python</span>
                         <span>FastAPI</span>
@@ -300,6 +301,20 @@
                         <span>LLM</span>
                     </div>
                     <a href="https://github.com/Prabinr2004/CSCI_Final_proJect" target="_blank" class="btn btn2" style="margin:20px 0 0;">View on GitHub</a>
+                </div>
+            </div>
+
+            <div class="work">
+                <div class="work-info">
+                    <h3>Nepali Language AI — Long-Term Goal</h3>
+                    <p>I grew up switching naturally between Nepali, Hindi, and English, but today's AI does not always handle that experience well. My long-term goal is to explore NLP for Nepali and eventually build tools that understand the language the way people actually use it — not only through literal translation.</p>
+                    <p style="margin-top:12px;">Right now, I'm building the machine learning, NLP, software, and data foundations I need to work toward that goal responsibly.</p>
+                    <div class="work-tags" style="margin-top:15px;">
+                        <span>NLP</span>
+                        <span>Nepali</span>
+                        <span>Machine Learning</span>
+                        <span>Long-Term Goal</span>
+                    </div>
                 </div>
             </div>
             <div class="work">
@@ -605,10 +620,10 @@
     // ==================== TYPEWRITER EFFECT ====================
     const typewriterElement = document.getElementById('typewriter');
     const phrases = [
-        'Data Science & ML Engineer',
+        'Building AI-powered ideas',
+        'Learning Machine Learning & NLP',
         'CS + Math + Digital Marketing',
-        'Building AI-powered apps',
-        'College of Idaho | Class of 2027'
+        'From Nepal | Studying in Idaho'
     ];
  
     let phraseIndex = 0;
